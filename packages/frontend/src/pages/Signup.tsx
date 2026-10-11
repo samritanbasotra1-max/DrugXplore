@@ -30,9 +30,9 @@ const Signup = () => {
         navigate(`/app${location.state.from}`);
       } else {
         navigate("/app");
-        logEvent(analytics, "login", {
-          method: "google",
-        });
+        if (analytics) {
+          logEvent(analytics, "login", { method: "google" });
+        }
       }
     }
   }, [authStore.user, location.state, navigate]);

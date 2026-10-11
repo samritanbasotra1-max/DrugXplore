@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import AddInput from "../components/AddInput";
 import Popup from "../components/Popup";
+import requestResults from "../functions/requestResults";
 import app, { db } from "../hooks/firebase";
 
 const Existing = () => {
@@ -17,25 +18,24 @@ const Existing = () => {
   const [medicines, setMedicines] = useState<string[]>([""]);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{ text: string } | null>(null);
+  const [errorMessage, setErrorMessage] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [showPopup, setShowPopup] = useState(false);
   // todo: sanitize user input
   const getResults = async () => {
+    setLoading(true);
+    setErrorMessage("");
+    setResult(null);
     try {
-      setLoading(true);
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/existing`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ symptoms, medicines }),
-      });
-      setLoading(false);
-      const data = await res.json();
+      const data = await requestResults("existing", { symptoms, medicines });
       setResult(data);
     } catch (error) {
       console.error(error);
+      setErrorMessage(
+        error instanceof Error ? error.message : "Could not generate results.",
+      );
+    } finally {
       setLoading(false);
     }
   };
@@ -146,6 +146,11 @@ const Existing = () => {
             <span className="flex items-center">Loading...</span>
           </span>
         </div>
+      )}
+      {errorMessage && (
+        <p role="alert" className="w-full rounded-lg bg-red-50 p-4 text-red-700">
+          {errorMessage}
+        </p>
       )}
       {result && (
         <div className="flex flex-col items-center justify-center w-full gap-4">

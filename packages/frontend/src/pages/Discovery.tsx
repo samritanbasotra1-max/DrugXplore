@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import AddInput from "../components/AddInput";
 import Popup from "../components/Popup";
+import requestResults from "../functions/requestResults";
 import app, { db } from "../hooks/firebase";
 
 const Discovery = () => {
@@ -17,6 +18,7 @@ const Discovery = () => {
   const [regions_of_interest, setRegionsOfInterest] = useState<string[]>([""]);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{ text: string } | null>(null);
+  const [errorMessage, setErrorMessage] = useState("");
   const [regionsCount, setRegionsCount] = useState(1);
   const [activeCount, setActiveCount] = useState(1);
   const [name, setName] = useState("");
@@ -26,26 +28,24 @@ const Discovery = () => {
 
   // todo: sanitize user input
   const getResults = async () => {
+    setLoading(true);
+    setErrorMessage("");
+    setResult(null);
     try {
-      setLoading(true);
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/discovery`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      const data = await requestResults("discovery", {
           target_disease,
           desired_extraction_method,
           medicine_name,
           active_compounds,
           regions_of_interest,
-        }),
       });
-      setLoading(false);
-      const data = await res.json();
       setResult(data);
     } catch (error) {
       console.error(error);
+      setErrorMessage(
+        error instanceof Error ? error.message : "Could not generate results.",
+      );
+    } finally {
       setLoading(false);
     }
   };
@@ -202,6 +202,11 @@ const Discovery = () => {
             <span className="flex items-center">Loading...</span>
           </span>
         </div>
+      )}
+      {errorMessage && (
+        <p role="alert" className="w-full rounded-lg bg-red-50 p-4 text-red-700">
+          {errorMessage}
+        </p>
       )}
       {result && (
         <div className="flex flex-col items-center justify-center w-full gap-4">

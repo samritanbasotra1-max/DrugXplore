@@ -1,7 +1,10 @@
-import type { RequestHandler } from "express";
+import type { ErrorRequestHandler } from "express";
 
-const error: RequestHandler = (_req, res) => {
-  res.status(404).json({ error: "Not Found" });
+const error: ErrorRequestHandler = (cause, _req, res, _next) => {
+  console.error("API request failed:", cause);
+  res.status(500).json({
+    error: cause instanceof Error ? cause.message : "The API request failed.",
+  });
 };
 
 export default error;

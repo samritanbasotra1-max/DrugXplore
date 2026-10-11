@@ -1,50 +1,15 @@
-# React + TypeScript + Vite
+# DrugXploreAI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Run locally
 
-Currently, two official plugins are available:
+1. From the repository root, install dependencies with `npm install`.
+2. Copy `packages/frontend/.env.example` to `packages/frontend/.env.local` and fill in the Firebase web app values. Set `VITE_API_URL=http://localhost:3000` for local development.
+3. Copy `packages/backend/.env.example` to `packages/backend/.env` and set `GOOGLE_API_KEY` to a key from a Gemini API Free Tier project. Free-tier quotas and eligible models are set by Google; the project must not have billing enabled.
+4. In one terminal, run `npm run dev --workspace=backend` from the repository root.
+5. In another terminal, run `npm run dev --workspace=frontend` from the repository root and open the URL printed by Vite.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Firebase Authentication and Firestore must be enabled in the Firebase project. Firestore should use owner-only security rules. Never commit `.env.local` or `.env` files.
 
-## Expanding the ESLint configuration
+## Build the frontend
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from "eslint-plugin-react";
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: "18.3" } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs["jsx-runtime"].rules,
-  },
-});
-```
+Run `npm run build --workspace=frontend` from the repository root.
