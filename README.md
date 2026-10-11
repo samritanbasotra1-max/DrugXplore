@@ -1,6 +1,8 @@
 # DrugXploreAI
 
-**Project link:** [DrugXploreAI on GitHub](https://github.com/samritanbasotra1-max/DrugXplore)
+**Open the DrugXplore app:** [DrugXplore](https://drugxplore.web.app)
+
+**Source code:** [GitHub repository](https://github.com/samritanbasotra1-max/DrugXplore)
 
 DrugXploreAI is a web app for exploring potential drug discovery ideas, existing drug combinations, and Ayurveda-related information with generative AI.
 
@@ -20,4 +22,4 @@ See [the frontend setup notes](packages/frontend/README.md) for Firebase and loc
 - `packages/frontend` — React and Vite web app
 - `packages/backend` — Express and Genkit API
 
-The local demo is not a public hosted website. The GitHub link above points to the project source.
+The public app link opens the existing Firebase-hosted DrugXplore site. Local code changes need to be deployed separately to update that hosted version.
