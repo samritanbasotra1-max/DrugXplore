@@ -1,4 +1,4 @@
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 import { getAuth } from "firebase/auth";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
@@ -6,7 +6,6 @@ import { Link } from "react-router";
 import getAyurveda from "../functions/getAyurveda";
 import getDiscovery from "../functions/getDiscovery";
 import getExisting from "../functions/getExisting";
-import getGreeting from "../functions/getGreeting";
 import app from "../hooks/firebase";
 import { AyurvedicRes, DiscoveryRes, ExistingRes } from "../types";
 
@@ -31,29 +30,10 @@ const Dashboard = () => {
     ],
   });
 
-  const { data, error, isLoading } = useQuery({
-    queryKey: ["greeting"],
-    queryFn: getGreeting,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-    refetchOnMount: false,
-  });
-
   return (
     <div className="flex flex-col w-full h-full p-6 gap-6">
-      {isLoading && (
-        <div className="flex items-center justify-center w-full h-full p-4">
-          <div className="w-10 h-10 border-4 rounded-full border-tertiary animate-spin border-t-transparent"></div>
-        </div>
-      )}
-      {error && (
-        <div className="flex items-center justify-center w-full h-full p-4">
-          <div className="text-red-500">Error: {error.message}</div>
-        </div>
-      )}
-      {!isLoading && data && (
-        <>
-          <div className="py-4 text-4xl font-bold">{data.text}</div>
+      <>
+          <div className="py-4 text-4xl font-bold">Welcome to DrugXplore!</div>
           <div className="grid grid-cols-2 gap-4">
             <div
               onClick={() => setIsGenerateOpen(!isGenerateOpen)}
@@ -213,8 +193,7 @@ const Dashboard = () => {
                 </div>
               )}
           </div>
-        </>
-      )}
+      </>
     </div>
   );
 };
