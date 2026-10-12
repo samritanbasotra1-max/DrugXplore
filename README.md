@@ -6,14 +6,32 @@
 
 DrugXploreAI is a web app for exploring potential drug discovery ideas, existing drug combinations, and Ayurveda-related information with generative AI.
 
-## Run locally
+## Run locally in VS Code (Windows)
 
-1. Install Node.js, then run `npm install` from the repository root.
-2. Copy `packages/frontend/.env.example` to `packages/frontend/.env.local` and fill in the Firebase web app settings.
-3. Copy `packages/backend/.env.example` to `packages/backend/.env` and set `GOOGLE_API_KEY` to your Gemini API key. Do not commit either environment file.
-4. Start the backend in one terminal: `npm run dev --workspace=backend`.
-5. Start the frontend in another terminal: `npm run dev --workspace=frontend`.
-6. Open the local URL printed by Vite.
+1. Install Node.js, extract this ZIP, and open the extracted `DrugXploreAI` folder in VS Code (**File → Open Folder**).
+2. In the VS Code terminal, run these commands from the folder containing the root `package.json`:
+
+   ```powershell
+   npm install
+   Copy-Item packages/frontend/.env.example packages/frontend/.env.local
+   Copy-Item packages/backend/.env.example packages/backend/.env
+   ```
+
+3. Open `packages/frontend/.env.local` and fill in the Firebase web app values. Keep `VITE_API_URL=http://localhost:3000` for local development.
+4. Open `packages/backend/.env` and set `GOOGLE_API_KEY` to your Gemini API key. The ZIP contains templates only; private keys and Firebase configuration are deliberately excluded. Never commit `.env.local` or `.env`.
+5. In the first VS Code terminal, start the backend:
+
+   ```powershell
+   npm run dev --workspace=backend
+   ```
+
+6. Open a second VS Code terminal and start the frontend:
+
+   ```powershell
+   npm run dev --workspace=frontend
+   ```
+
+7. Open the Vite URL shown in the terminal, usually `http://localhost:5173`.
 
 See [the frontend setup notes](packages/frontend/README.md) for Firebase and local configuration details.
 
