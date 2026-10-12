@@ -17,8 +17,15 @@ DrugXploreAI is a web app for exploring potential drug discovery ideas, existing
    Copy-Item packages/backend/.env.example packages/backend/.env
    ```
 
-3. Open `packages/frontend/.env.local` and fill in the Firebase web app values. Keep `VITE_API_URL=http://localhost:3000` for local development.
-4. Open `packages/backend/.env` and set `GOOGLE_API_KEY` to your Gemini API key. The ZIP contains templates only; private keys and Firebase configuration are deliberately excluded. Never commit `.env.local` or `.env`.
+   If you extract the ZIP in your Documents folder and already configured the original checkout on this computer, copy its local settings instead of re-entering them:
+
+   ```powershell
+   Copy-Item "$env:USERPROFILE/OneDrive/Documents/DrugXploreAI/DrugXplore/packages/frontend/.env.local" "packages/frontend/.env.local"
+   Copy-Item "$env:USERPROFILE/OneDrive/Documents/DrugXploreAI/DrugXplore/packages/backend/.env" "packages/backend/.env"
+   ```
+
+3. If you did not copy existing settings, open `packages/frontend/.env.local` and fill in the Firebase web app values. Keep `VITE_API_URL=http://localhost:3000` for local development.
+4. If you did not copy existing settings, open `packages/backend/.env` and set `GOOGLE_API_KEY` to your Gemini API key. The ZIP contains templates only; private keys and Firebase configuration are deliberately excluded. Never commit `.env.local` or `.env`.
 5. In the first VS Code terminal, start the backend:
 
    ```powershell
